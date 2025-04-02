@@ -26,19 +26,18 @@ jobs:
       with:
         node-version: ${{ env.NODE_VERSION }}
 
-    # Install dependencies, build, and test
-    - name: Install dependencies, build, and test
+    # Install dependencies and build
+    - name: Install dependencies and build
       run: |
         npm install
         npm run build --if-present
-    
       working-directory: ./emp_app  # Set correct project folder
                
     # Deploy web app to Azure
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v3
       with:
-        app-name: ${{ env.EmpApp }}  # Fixed incorrect variable reference
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}  # Fixed variable reference
         package: ./emp_app/build  # Ensure correct build output directory
 
     # Azure Logout
