@@ -37,7 +37,7 @@ jobs:
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v3
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}  # Fixed variable reference
+        app-name: ${{ env.reactEmp }}  # Fixed variable reference
         package: ./emp_app/build  # Ensure correct build output directory
 
     # Azure Logout
