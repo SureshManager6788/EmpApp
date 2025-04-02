@@ -3,7 +3,7 @@ name: eMPaPP CI CD
 on: [push]
 
 env:
-  AZURE_WEBAPP_NAME: emp_app   # Application name in Azure
+  AZURE_WEBAPP_NAME: reactEmp   # Application name in Azure
   NODE_VERSION: '18.x'         # Node.js version
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
     - name: Deploy to Azure
       uses: azure/webapps-deploy@v3
       with:
-        app-name: ${{ env.reactEmp }}  # Fixed variable reference
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}  # Fixed variable reference
         package: ./emp_app/build  # Ensure correct build output directory
 
     # Azure Logout
