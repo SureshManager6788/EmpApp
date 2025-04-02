@@ -17,7 +17,7 @@ jobs:
    
     - uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.SECRETREACT }}
         
     - name: Setup Node ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v4
@@ -34,7 +34,7 @@ jobs:
     # deploy web app using Azure credentials
     - uses: azure/webapps-deploy@v3
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        app-name: ${{ env.EmpApp }}
         package: ./build
 
     # Azure logout 
