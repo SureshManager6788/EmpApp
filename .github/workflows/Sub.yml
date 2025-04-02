@@ -38,7 +38,7 @@ jobs:
       uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}  # Fixed variable reference
-        package: ./emp_app/build  # Ensure correct build output directory
+        package: ./build  # Ensure correct build output directory
 
     # Azure Logout
     - name: Azure Logout
