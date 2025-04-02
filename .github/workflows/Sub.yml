@@ -3,41 +3,45 @@ name: eMPaPP CI CD
 on: [push]
 
 env:
-  AZURE_WEBAPP_NAME: emp_app   # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '18.x'                # set this to the node version to use
+  AZURE_WEBAPP_NAME: emp_app   # Application name in Azure
+  NODE_VERSION: '18.x'         # Node.js version
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    # checkout the repo
+    # Checkout the repository
     - name: 'Checkout GitHub Action' 
-      uses: actions/checkout@main
+      uses: actions/checkout@v4  # Updated to latest stable version
    
-    - uses: azure/login@v1
+    # Azure Login
+    - name: Azure Login
+      uses: azure/login@v1
       with:
         creds: ${{ secrets.SECRETREACT }}
         
-    - name: Setup Node ${{ env.NODE_VERSION }}
+    # Setup Node.js
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
-    
-    - name: 'npm install, build, and test'
+
+    # Install dependencies, build, and test
+    - name: Install dependencies, build, and test
       run: |
         npm install
         npm run build --if-present
         npm run test --if-present
-      working-directory:  .
+      working-directory: ./emp_app  # Set correct project folder
                
-    # deploy web app using Azure credentials
-    - uses: azure/webapps-deploy@v3
+    # Deploy web app to Azure
+    - name: Deploy to Azure
+      uses: azure/webapps-deploy@v3
       with:
-        app-name: ${{ env.EmpApp }}
-        package: ./build
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}  # Fixed incorrect variable reference
+        package: ./emp_app/build  # Ensure correct build output directory
 
-    # Azure logout 
-    - name: logout
+    # Azure Logout
+    - name: Azure Logout
       run: |
         az logout
